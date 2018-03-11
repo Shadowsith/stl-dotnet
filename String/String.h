@@ -1,3 +1,6 @@
+#ifndef STRING_H
+#define STRING_H
+
 #include <string>
 #include <vector>
 
@@ -49,3 +52,5 @@ class String{
         static std::string normPathWindows(std::string &str);
 
 };
+
+#endif
