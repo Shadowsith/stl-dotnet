@@ -20,17 +20,19 @@ bool String::isEmptyOrWhiteSpace(const std::string &str) {
     }
 }
 
-bool String::compare(const std::string &str1, const std::string &str2) {
+bool String::compare(const std::string &str1, const std::string str2) {
     if(str1.compare(str2) == 0)
         return true;
     else false;
 }
 
-inline bool String::equals(const std::string &str1, const std::string &str2) {
-    String::compare(str1, str2);
+bool String::equals(const std::string &str1, const std::string &str2) {
+    if(str1.compare(str2) == 0)
+        return true;
+    else false;
 }
 
-// string formatting 
+// string formating 
 std::string String::concat(const std::string &str1, const std::string &str2) {
     return str1 + str2; 
 }
@@ -78,9 +80,23 @@ inline int String::lastIndexOf(std::string &str, std::string find){
     String::findLast(str, find);
 }
 
-std::string String::format(std::string formatText, std::string &str){}
-std::string String::format(std::string formatText, std::string &str1, std::string &str2){}
-std::string String::format(std::string formatText, std::string &str1, std::string &str2, std::string &str3){}
+std::string String::format(std::string formatText, std::string &str){
+    formatText = String::replaceFirst(formatText, "{0}", str); 
+    return formatText; 
+}
+
+std::string String::format(std::string formatText, std::string &str1, std::string &str2){
+    formatText = String::replaceFirst(formatText, "{0}", str1); 
+    formatText = String::replaceFirst(formatText, "{1}", str2); 
+    return formatText; 
+}
+
+std::string String::format(std::string formatText, std::string &str1, std::string &str2, std::string &str3){
+    formatText = String::replaceFirst(formatText, "{0}", str1); 
+    formatText = String::replaceFirst(formatText, "{1}", str2); 
+    formatText = String::replaceFirst(formatText, "{2}", str3); 
+    return formatText; 
+}
 
 std::string String::replace(std::string &str, std::string oldstr, std::string newstr){
     std::size_t pos = str.find(oldstr);

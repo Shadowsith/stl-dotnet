@@ -11,8 +11,8 @@ class String{
         // bool's
         static bool isEmpty(const std::string &str);
         static bool isEmptyOrWhiteSpace(const std::string &str);
-        static bool compare(const std::string &str1, const std::string &str2);
-        static inline bool equals(const std::string &str1, const std::string &str2);
+        static bool compare(const std::string &str1, const std::string str2);
+        static bool equals(const std::string &str1, const std::string &str2);
 
         // string formatting 
         static std::string concat(const std::string &str1, const std::string &str2);
