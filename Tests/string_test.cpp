@@ -57,6 +57,29 @@ void LowerTest() {
         std::cout << text::green("LowerTest: accpeted") << std::endl;
 }
 
+void FormatTest() {
+    std::string first_name = "Jolly";
+    std::string last_name = "Rogers";
+    std::string job = "Pirate";
+    
+    std::string format1 = String::format("{0} is his first name", first_name);
+    std::string format2 = String::format("{0}'s last name is {1}", first_name, last_name); 
+    std::string format3 = String::format("{0} {1} is a {2}.", first_name, last_name, job); 
+
+    if ( String::compare(format1, "Jolly is his first name") 
+            && String::compare(format2, "Jolly's last name is Rogers")
+            && String::compare(format3, "Jolly Rogers is a Pirate."))
+    {
+        std::cout << text::green("FormatTest: accepted") << std::endl;
+    }
+    else {
+        std::cout << text::red("FormatTest: denied") << std::endl;
+        std::cout << format1 << std::endl;
+        std::cout << format2 << std::endl;
+        std::cout << format3 << std::endl;
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -66,6 +89,7 @@ int main(int argc, char *argv[])
     NotEmptyTest();
     UpperTest();
     LowerTest();
+    FormatTest(); 
 
     return 0;
 }
