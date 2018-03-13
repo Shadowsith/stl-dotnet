@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <iterator>
+#include <regex>
 
 // bool's
 bool String::isEmpty(const std::string &str) {
@@ -40,7 +41,12 @@ std::string String::concat(const std::string &str1, const std::string &str2) {
 std::string String::copy(const std::string &str){}
 std::string String::copyTo(const std::string &str){}
 
-std::vector<int> String::find(std::string &str, std::string search){
+int String::count(const std::string &str, std::string searchStr) {
+    std::vector<int> intArr = String::find(str, searchStr); 
+    return intArr.size(); 
+}
+
+std::vector<int> String::find(const std::string &str, std::string search){
     std::vector<int> vec;
 
     std::size_t pos = str.find(search);
@@ -96,6 +102,37 @@ std::string String::format(std::string formatText, std::string &str1, std::strin
     formatText = String::replaceFirst(formatText, "{1}", str2); 
     formatText = String::replaceFirst(formatText, "{2}", str3); 
     return formatText; 
+}
+
+std::string String::format(std::string formatText, std::vector<std::string> &strArr) {
+    try {
+        std::vector<std::string> parameter; 
+        std::regex re("\\{[0-9]{1,3}\\}");
+        std::sregex_iterator iter(formatText.begin(), formatText.end(), re); 
+        std::sregex_iterator end; 
+        std::stringstream ss; 
+
+        while (iter != end) {
+            for (int i = 0; i < iter->size(); i++) {
+                ss << (*iter)[i]; 
+                parameter.push_back(ss.str());
+            }
+            iter++; 
+        }
+
+        for (int i = 0; i < parameter.size(); i++){
+            if (i < strArr.size()) {
+                formatText = String::replaceFirst(formatText, parameter[i], strArr[i]);
+            }
+            else {
+                break;
+            }
+        }
+
+    }
+    catch (std::exception ex) {
+        std::cout << ex.what() << std::endl;
+    }
 }
 
 std::string String::replace(std::string &str, std::string oldstr, std::string newstr){

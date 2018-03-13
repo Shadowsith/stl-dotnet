@@ -18,8 +18,9 @@ class String{
         static std::string concat(const std::string &str1, const std::string &str2);
         static std::string copy(const std::string &str);
         static std::string copyTo(const std::string &str);
-        std::vector<int> find(std::string &str, std::string search);
-        inline std::vector<int> findAll(std::string &str, std::string search);
+        static int count(const std::string &str, std::string searchStr); 
+        static std::vector<int> find(const std::string &str, std::string search);
+        static inline std::vector<int> findAll(std::string &str, std::string search);
         static int findFirst(std::string &str, std::string find);
             static inline int indexOf(std::string &str, std::string find);
         static int findLast(std::string &str, std::string find);
@@ -27,6 +28,7 @@ class String{
         static std::string format(std::string formatText, std::string &str);
         static std::string format(std::string formatText, std::string &str1, std::string &str2);
         static std::string format(std::string formatText, std::string &str1, std::string &str2, std::string &str3);
+        static std::string format(std::string formatText, std::vector<std::string> &strArr);
         static std::string replace(std::string &str, std::string oldstr, std::string newstr);
         static std::string replaceFirst(std::string &str, std::string oldstr, std::string newstr);
         static std::string replaceLast(std::string &str, std::string oldstr, std::string newstr);

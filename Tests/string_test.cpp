@@ -61,14 +61,23 @@ void FormatTest() {
     std::string first_name = "Jolly";
     std::string last_name = "Rogers";
     std::string job = "Pirate";
+
+    std::vector<std::string> sList;
+    sList.push_back(first_name);
+    sList.push_back(last_name);
+    sList.push_back(job);
+    sList.push_back("Hohoho");
+    sList.push_back("and a bottel full rum");
     
     std::string format1 = String::format("{0} is his first name", first_name);
     std::string format2 = String::format("{0}'s last name is {1}", first_name, last_name); 
     std::string format3 = String::format("{0} {1} is a {2}.", first_name, last_name, job); 
+    std::string format4 = String::format("{0} {1} is a {2}. {3} {4}.", sList);
 
     if ( String::compare(format1, "Jolly is his first name") 
             && String::compare(format2, "Jolly's last name is Rogers")
-            && String::compare(format3, "Jolly Rogers is a Pirate."))
+            && String::compare(format3, "Jolly Rogers is a Pirate.")
+            && String::compare(format4, "Jolly Rogers is A Pirate. Hohoho and a bottel full rum."))
     {
         std::cout << text::green("FormatTest: accepted") << std::endl;
     }
@@ -77,7 +86,10 @@ void FormatTest() {
         std::cout << format1 << std::endl;
         std::cout << format2 << std::endl;
         std::cout << format3 << std::endl;
+        std::cout << format4 << std::endl;
     }
+
+
 }
 
 

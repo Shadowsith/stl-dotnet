@@ -3,9 +3,11 @@ make:
 	@echo "For convert test: make convert"
 
 string:
+	@rm -f String_Test
 	g++ lib/textformat.cpp ../String/String.cpp string_test.cpp -o String_Test
 
 convert:
+	@rm -f Convert_Test
 	g++ lib/textformat.cpp ../Convert/Convert.cpp convert_test.cpp -o Convert_Test
 
 all: 
