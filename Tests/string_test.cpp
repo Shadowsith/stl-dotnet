@@ -77,7 +77,7 @@ void FormatTest() {
     if ( String::compare(format1, "Jolly is his first name") 
             && String::compare(format2, "Jolly's last name is Rogers")
             && String::compare(format3, "Jolly Rogers is a Pirate.")
-            && String::compare(format4, "Jolly Rogers is A Pirate. Hohoho and a bottel full rum."))
+            && String::compare(format4, "Jolly Rogers is a Pirate. Hohoho and a bottel full rum."))
     {
         std::cout << text::green("FormatTest: accepted") << std::endl;
     }

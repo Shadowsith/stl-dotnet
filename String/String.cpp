@@ -110,16 +110,13 @@ std::string String::format(std::string formatText, std::vector<std::string> &str
         std::regex re("\\{[0-9]{1,3}\\}");
         std::sregex_iterator iter(formatText.begin(), formatText.end(), re); 
         std::sregex_iterator end; 
-        std::stringstream ss; 
 
         while (iter != end) {
             for (int i = 0; i < iter->size(); i++) {
-                ss << (*iter)[i]; 
-                parameter.push_back(ss.str());
+                parameter.push_back((*iter)[i]);
             }
             iter++; 
         }
-
         for (int i = 0; i < parameter.size(); i++){
             if (i < strArr.size()) {
                 formatText = String::replaceFirst(formatText, parameter[i], strArr[i]);
@@ -128,7 +125,7 @@ std::string String::format(std::string formatText, std::vector<std::string> &str
                 break;
             }
         }
-
+        return formatText; 
     }
     catch (std::exception ex) {
         std::cout << ex.what() << std::endl;
