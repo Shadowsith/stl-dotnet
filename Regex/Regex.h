@@ -27,6 +27,10 @@ class Regex {
         static std::vector<std::string> getAllMatches(std::string &str, std::regex &pattern);
         static std::vector<std::string> getAllMatches(std::string &str, std::string &pattern);
         static std::vector<const char*> getAllMatches(const char* &cstr, const char* &pattern);
+
+        static std::vector<int> getIndicesOfAllMatches(std::string &str, std::regex &pattern);
+        static std::vector<int> getIndicesOfAllMatches(std::string &str, std::string &pattern);
+        static std::vector<int> getIndicesOfAllMatches(const char* &cstr, const char* &pattern); 
 };
 
 
