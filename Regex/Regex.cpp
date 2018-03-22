@@ -4,6 +4,15 @@
 #include "Regex.h"
 #include <iostream>
 
+bool Regex::isMatch(std::string &str, std::regex &pattern) {
+    return std::regex_match(str, pattern); 
+}
+
+bool Regex::isMatch(std::string &str, std::string &pattern) {
+    std::regex re(pattern);
+    return std::regex_match(str, re); 
+}
+
 std::string Regex::getFirstMatch(std::string &str, std::regex &pattern) {
     std::smatch match;
     std::string str_match = ""; 
@@ -25,55 +34,86 @@ std::string Regex::getFirstMatch(std::string &str, std::string &pattern) {
     return str_match; 
 }
 
-const char* Regex::getFirstMatch(const char* &cstr, const char* &pattern) {
-    std::smatch match;
-    std::string str(cstr);
-    std::string str_match = "";
-    std::regex re(pattern); 
-    if ( std::regex_search(str,match,re) ){
-        for (auto x:match)
-            str_match = x; 
-    }
-    const char* cstr_match = str_match.c_str(); 
-    return cstr_match; 
-}
-
 int Regex::getIndexOfFirstMatch(std::string &str, std::regex &pattern) {
-    int index = -1;
-    std::smatch match;
-    std::string str_match = ""; 
-    if ( std::regex_search(str,match,pattern) ){
-        for (auto x:match)
-            str_match = x; 
-        index = str.find(str_match); 
-    }
+    std::string firstMatch = Regex::getFirstMatch(str, pattern); 
+    return str.find(firstMatch); 
 }
 
 int Regex::getIndexOfFirstMatch(std::string &str, std::string &pattern) {
-    int index = -1;
-    std::smatch match;
-    std::string str_match = "";
-    std::regex re(pattern); 
-    if ( std::regex_search(str,match,re) ){
-        for (auto x:match)
-            str_match = x; 
-        index = str.find(str_match); 
-    }
-    return index; 
+    std::string firstMatch = Regex::getFirstMatch(str,pattern);
+    return str.find(firstMatch); 
 }
 
-int Regex::getIndexOfFirstMatch(const char* &cstr, const char* &pattern) {
-    int index = -1;
-    std::smatch match;
-    std::string str(cstr);
-    std::string str_match = "";
-    std::regex re(pattern); 
-    if ( std::regex_search(str,match,re) ){
-        for (auto x:match)
-            str_match = x; 
-        index = str.find(str_match); 
+std::string Regex::replaceFirstMatch(std::string &str, std::regex &pattern, std::string replacement) {
+    std::string firstMatch = Regex::getFirstMatch(str, pattern);
+    std::size_t pos = str.find(firstMatch);
+    if(pos != std::string::npos){
+        str.replace(pos, firstMatch.length(), replacement);
     }
-    return index;
+    return str;
+}
+
+std::string Regex::replaceFirstMatch(std::string &str, std::string &pattern, std::string replacement) {
+    std::string firstMatch = Regex::getFirstMatch(str, pattern);
+    std::size_t pos = str.find(firstMatch);
+    if(pos != std::string::npos){
+        str.replace(pos, firstMatch.length(), replacement);
+    }
+    return str;
+}
+
+
+std::string Regex::getLastMatch(std::string &str, std::regex &pattern) {
+    std::sregex_iterator iter(str.begin(), str.end(), pattern); 
+    std::sregex_iterator end; 
+    std::string str_match = "";
+
+    while ( iter != end ) {
+        str_match = (*iter).str(); 
+        iter++; 
+    }
+    return str_match; 
+}
+
+std::string Regex::getLastMatch(std::string &str, std::string &pattern) {
+    std::regex re(pattern);
+    std::sregex_iterator iter(str.begin(), str.end(), re); 
+    std::sregex_iterator end; 
+    std::string str_match = "";
+
+    while (iter != end) {
+        str_match = (*iter).str(); 
+        iter++;
+    }
+    return str_match; 
+}
+
+int Regex::getIndexOfLastMatch(std::string &str, std::regex &pattern) {
+    std::string lastMatch = Regex::getLastMatch(str, pattern); 
+    return str.rfind(lastMatch); 
+}
+
+int Regex::getIndexOfLastMatch(std::string &str, std::string &pattern) {
+    std::string lastMatch = Regex::getLastMatch(str, pattern); 
+    return str.rfind(lastMatch); 
+}
+
+std::string Regex::replaceLastMatch(std::string &str, std::regex &pattern, std::string replacement) {
+    std::string lastMatch = Regex::getLastMatch(str, pattern); 
+    std::size_t pos = str.rfind(lastMatch);
+    if(pos != std::string::npos){
+        str.replace(pos, lastMatch.length(), replacement);
+    }
+    return str;
+}
+
+std::string Regex::replaceLastMatch(std::string &str, std::string &pattern, std::string replacement) {
+    std::string lastMatch = Regex::getLastMatch(str, pattern); 
+    std::size_t pos = str.rfind(lastMatch);
+    if(pos != std::string::npos){
+        str.replace(pos, lastMatch.length(), replacement);
+    }
+    return str;
 }
 
 std::vector<std::string> Regex::getAllMatches(std::string &str, std::regex &pattern) {
@@ -82,9 +122,7 @@ std::vector<std::string> Regex::getAllMatches(std::string &str, std::regex &patt
     std::sregex_iterator end; 
 
     while (iter != end) {
-        for (int i = 0; i < iter->size(); i++) {
-            matches.push_back((*iter)[i]);
-        }
+        matches.push_back((*iter).str());
         iter++; 
     }
     return matches; 
@@ -97,52 +135,51 @@ std::vector<std::string> Regex::getAllMatches(std::string &str, std::string &pat
     std::sregex_iterator end; 
 
     while (iter != end) {
-        for (int i = 0; i < iter->size(); i++) {
-            matches.push_back((*iter)[i]);
-        }
-        iter++; 
-    }
-    return matches; 
-}
-
-std::vector<const char*> Regex::getAllMatches(const char* &cstr, const char* &pattern) {
-    std::vector<const char*> matches; 
-    std::regex re(pattern);
-    std::string str(cstr);
-    std::sregex_iterator iter(str.begin(), str.end(), re); 
-    std::sregex_iterator end; 
-
-    while (iter != end) {
-        for (int i = 0; i < iter->size(); i++) {
-            str = (*iter)[i];
-            matches.push_back(str.c_str());
-        }
+        matches.push_back((*iter).str());
         iter++; 
     }
     return matches; 
 }
 
 std::vector<int> Regex::getIndicesOfAllMatches(std::string &str, std::regex &pattern) {
-    std::vector<std::string> matches; 
+    std::vector<std::string> matches = Regex::getAllMatches(str, pattern); 
     std::vector<int> indices; 
-    std::sregex_iterator iter(str.begin(), str.end(), pattern); 
-    std::sregex_iterator end; 
 
-    while (iter != end) {
-        for (int i = 0; i < iter->size(); i++) {
-            matches.push_back((*iter)[i]);
+    if ( matches.size() > 0 ) {
+        std::size_t pos = str.find(matches[0]);
+        while(pos != std::string::npos)
+        {
+            indices.push_back(pos);
+            pos = str.find(matches[0],pos+1);
         }
-        iter++; 
     }
-    for (int i = 0; i < matches.size(); i++) {
-        
+    return indices; 
+}
+
+
+std::vector<int> Regex::getIndicesOfAllMatches(std::string &str, std::string &pattern) {
+    std::vector<std::string> matches = Regex::getAllMatches(str, pattern); 
+    std::vector<int> indices; 
+
+    if ( matches.size() > 0 ) {
+        std::size_t pos = str.find(matches[0]);
+        while(pos != std::string::npos)
+        {
+            indices.push_back(pos);
+            pos = str.find(matches[0],pos+1);
+        }
     }
+    return indices; 
 }
 
 int main(int argc, char *argv[])
 {
-    const char* str1 = "hallo";
-    const char* str2 = "a";
-    std::cout << Regex::getFirstMatch(str1, str2) << std::endl;
+    std::string str1 = "{0} {1} {2}";
+    std::regex re("\\{[0-9]\\}");
+    std::string pattern = "\\{[0-9]\\}"; 
+    std::vector<std::string> vec = Regex::getAllMatches(str1, pattern);
+    for (int i = 0; i < vec.size(); i++) {
+        std::cout << vec[i] << std::endl;
+    }
     return 0;
 }
