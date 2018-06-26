@@ -41,8 +41,8 @@ class String{
         static std::string eraseTail(std::string &str, int tailsize); 
         std::vector<std::string> split(std::string &str, const std::string delimiter);
         static std::vector<char> toCharArr(std::string &str);
-        static std::string toUpper(std::string &str);
-        static std::string toLower(std::string &str);
+        static std::string toUpper(std::string str);
+        static std::string toLower(std::string str);
         static std::string trim(std::string &str);
         static std::string trimLeft(std::string &str);
         static std::string trimRight(std::string &str);

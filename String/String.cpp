@@ -221,25 +221,14 @@ std::vector<std::string> String::split (std::string &str, const std::string deli
 
 std::vector<char> String::toCharArr(std::string &str){}
 
-std::string String::toUpper(std::string &str){
-    std::locale loc;
-    std::string upper;
-    for(std::string::size_type i = 0; i < str.length(); ++i)
-    {
-        upper += std::toupper(str[i], loc);
-    }
-    str = upper;
+std::string String::toUpper(std::string str){
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);  
     return str; 
 }
 
-std::string String::toLower(std::string &str){
-    std::locale loc;
-    std::string lower;
-    for(std::string::size_type i = 0; i < str.length(); ++i)
-    {
-        lower += std::tolower(str[i], loc);
-    }
-   return str;
+std::string String::toLower(std::string str){
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);  
+    return str;
 }
 
 std::string String::trim(std::string &str){
