@@ -16,8 +16,7 @@ class String{
 
         // string formatting 
         static std::string concat(const std::string &str1, const std::string &str2);
-        static std::string copy(const std::string &str);
-        static std::string copyTo(const std::string &str);
+        static void copyTo(const std::string &from, std::string &to);
         static int count(const std::string &str, std::string searchStr); 
         static std::vector<int> find(const std::string &str, std::string search);
         static inline std::vector<int> findAll(std::string &str, std::string search);
@@ -39,7 +38,8 @@ class String{
         static std::string eraseLast(std::string &str, std::string erasestr); 
         static std::string eraseHead(std::string &str, int headsize); 
         static std::string eraseTail(std::string &str, int tailsize); 
-        std::vector<std::string> split(std::string &str, const std::string delimiter);
+        static std::vector<std::string> split(std::string str, const std::string delimiter);
+        static void swap(std::string &str1, std::string &str2);
         static std::vector<char> toCharArr(std::string &str);
         static std::string toUpper(std::string str);
         static std::string toLower(std::string str);

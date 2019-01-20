@@ -10,10 +10,9 @@ bool String::isEmpty(const std::string &str) {
 }
 
 bool String::isEmptyOrWhiteSpace(const std::string &str) {
-    if(str.empty()){
-    return true;
-    }
-    else{
+    if(str.empty()) {
+        return true;
+    } else {
         if(str.find_first_not_of(' ') != std::string::npos){
             return false;
         }
@@ -38,8 +37,9 @@ std::string String::concat(const std::string &str1, const std::string &str2) {
     return str1 + str2; 
 }
 
-std::string String::copy(const std::string &str){}
-std::string String::copyTo(const std::string &str){}
+void String::copyTo(const std::string &from, std::string &to){
+    to = from;
+}
 
 int String::count(const std::string &str, std::string searchStr) {
     std::vector<int> intArr = String::find(str, searchStr); 
@@ -50,8 +50,7 @@ std::vector<int> String::find(const std::string &str, std::string search){
     std::vector<int> vec;
 
     std::size_t pos = str.find(search);
-    while(pos != std::string::npos)
-    {
+    while(pos != std::string::npos) {
         vec.push_back(pos);
         pos = str.find(search,pos+1);
     }
@@ -59,7 +58,7 @@ std::vector<int> String::find(const std::string &str, std::string search){
 }
 
 inline std::vector<int> String::findAll(std::string &str, std::string search){
-    String::find(str, search);
+    return String::find(str, search);
 }
 
 int String::findFirst(std::string &str ,std::string find){
@@ -71,7 +70,7 @@ int String::findFirst(std::string &str ,std::string find){
 }
 
 inline int indexOf(std::string &str, std::string find){
-    String::findFirst(str, find);
+    return String::findFirst(str, find);
 }
 
 int String::findLast(std::string &str, std::string find){
@@ -83,7 +82,7 @@ int String::findLast(std::string &str, std::string find){
 }
     
 inline int String::lastIndexOf(std::string &str, std::string find){
-    String::findLast(str, find);
+    return String::findLast(str, find);
 }
 
 std::string String::format(std::string formatText, std::string &str){
@@ -206,7 +205,7 @@ std::string String::eraseTail(std::string &str, int tailsize){
     return str;
 } 
 
-std::vector<std::string> String::split (std::string &str, const std::string delimiter){
+std::vector<std::string> String::split (std::string str, const std::string delimiter){
     std::vector<std::string> parts;
     std::size_t pos = 0;
     std::string token;
@@ -219,7 +218,19 @@ std::vector<std::string> String::split (std::string &str, const std::string deli
     return parts;
 }
 
-std::vector<char> String::toCharArr(std::string &str){}
+void String::swap(std::string &str1, std::string &str2) {
+    std::string str3 = str1;
+    str1 = str2;
+    str2 = str3;
+}
+
+std::vector<char> String::toCharArr(std::string &str){
+    std::vector<char> vec;
+    for(char c : str) {
+        vec.push_back(c);
+    }
+    return vec;
+}
 
 std::string String::toUpper(std::string str){
     std::transform(str.begin(), str.end(), str.begin(), ::toupper);  
@@ -234,24 +245,19 @@ std::string String::toLower(std::string str){
 std::string String::trim(std::string &str){
     //trim left side
     std::string::size_type trimIt = 0;
-    for(std::string::size_type i = 0; i < str.length(); i++)
-    {
-        if(str[i] == ' ')
-        {
+    for(std::string::size_type i = 0; i < str.length(); i++) {
+        if(str[i] == ' ') {
             trimIt++;    
-        }
-        else break;
+        } else break;
     }
     str.erase(0,trimIt);
 
     //trim right side
     trimIt = str.length();
-    for(std::string::size_type i = str.length()-1; i > 0; i--)
-    {
+    for(std::string::size_type i = str.length()-1; i > 0; i--) {
         if(str[i] == ' '){
             trimIt--;
-        }
-        else break;
+        } else break;
     }
     str.erase(trimIt,str.length()-1);
 
@@ -260,13 +266,10 @@ std::string String::trim(std::string &str){
 
 std::string String::trimLeft(std::string &str){
     std::string::size_type trimIt = 0;
-    for(std::string::size_type i = 0; i < str.length(); i++)
-    {
-        if(str[i] == ' ')
-        {
+    for(std::string::size_type i = 0; i < str.length(); i++) {
+        if(str[i] == ' ') {
             trimIt++;    
-        }
-        else break;
+        } else break;
     }
     str.erase(0,trimIt);
 
@@ -293,7 +296,7 @@ std::string String::fillLeft(std::string &str, int length, char fill){
 }
 
 inline std::string String::padLeft(std::string &str, int length, char fill){
-    String::fillLeft(str, length, fill);    
+    return String::fillLeft(str, length, fill);    
 }
 
 std::string String::fillRight(std::string &str, int length, char fill){
@@ -304,7 +307,7 @@ std::string String::fillRight(std::string &str, int length, char fill){
 }
 
 inline std::string String::padRight(std::string &str, int length, char fill){
-    String::fillRight(str, length, fill);
+    return String::fillRight(str, length, fill);
 }
 
 std::string String::normPathUnix(std::string &str){
@@ -317,7 +320,7 @@ std::string String::normPathUnix(std::string &str){
 }
 
 std::string String::normPathWindows(std::string &str){
-    for(int i = 1; i < str.length(); i++){
+    for(int i = 1; i < str.length(); i++) {
         if(str.at(i) == str.at(i-1)){
             str.erase(i);
         }

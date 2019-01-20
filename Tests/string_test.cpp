@@ -88,8 +88,29 @@ void FormatTest() {
         std::cout << format3 << std::endl;
         std::cout << format4 << std::endl;
     }
+}
 
+void SplitTest() {
+    std::string test1= "map";
+    std::string test2 = "hello";
+    std::string test3 = "sfxy!834";
+    std::string test4 = "map hello sfxy!834";
+    std::string test5 = "map hello sfxy!834";
+    std::vector<std::string> vec = String::split(test4, " ");
 
+    if(test1 == vec[0] && test2 == vec[1] && test3 == vec[2] && test4 == test5) {
+        std::cout << text::green("SplitTest: accepted") << std::endl;
+    } else {
+        std::cout << text::red("SplitTest: denied") << std::endl;
+        for(std::string str : vec) {
+            std::cout << str << std::endl;
+        }
+    }
+}
+
+void RepaceTest() {
+    std::string str = "you are a wonderful person";
+    str = String::replaceFirst(str, "person", "girl");
 }
 
 
@@ -102,6 +123,7 @@ int main(int argc, char *argv[])
     UpperTest();
     LowerTest();
     FormatTest(); 
+    SplitTest();
 
     return 0;
 }
